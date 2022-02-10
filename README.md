@@ -1,5 +1,5 @@
 # JavaBench
-Java Benchmark
+To find the required jars go to src/out/production/artifacts then open the name respective folders and dowload the jars inside.
 To start the benchmark download JavaBench.jar and JavaSingleThreadBench.jar and then execute JavaBench in cmd.
 COMMAND: java -jar pathtoJavaBench
 Then follow the instructions given to you through the terminal.
