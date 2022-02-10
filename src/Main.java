@@ -58,7 +58,7 @@ public class Main
         System.out.println(SingleThreadOut1);
         System.out.println(SingleThreadOut2);
         CW.CreateATXTFile();
-        CW.WriteToDataTXT("\n-------------New Run-----------------");
+        CW.WriteToDataTXT("\n-------------New Run-----------------\n");
         CW.WriteToDataTXT(SingleThreadOut1+"\n"+SingleThreadOut2+"\n");
         int threads = Runtime.getRuntime().availableProcessors();
         int cores = threads/2;
