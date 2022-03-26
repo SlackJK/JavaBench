@@ -1,10 +1,113 @@
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.security.CodeSource;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class Main
 {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, URISyntaxException, InterruptedException {
+        CodeSource codeSource = Main.class.getProtectionDomain().getCodeSource();
+        File jarFile = new File(codeSource.getLocation().toURI().getPath());
+        String jarDir = jarFile.getParentFile().getPath();
+        System.out.println("Pick java benchmark, write the corresponding number for the benchmark:");
+        int WhichTest = -1;
+        Scanner sc = new Scanner(System.in);
+        while(WhichTest != 0 && WhichTest != 1)
+        {
+            System.out.println("JarBench (testing how many jars can be opened at once) [0], CPU test(just stress test) [1]");
+            WhichTest = sc.nextInt();
+        }
+        if(WhichTest == 0)
+        {
+            JarJavaBench(jarDir);
+        }
+        if(WhichTest == 1)
+        {
+            HeavyJavaBenchMain(jarDir);
+        }
+    }
+    public static void JarJavaBench(String dir) throws InterruptedException, IOException
+    {
+        int i = 0;
+        boolean test = false;
+        String WhereIWantIT = CreateDirectory(dir,"\\JarTestBats\\");;
+        System.out.println(WhereIWantIT);
+        CreateWordsTXT cw = new CreateWordsTXT();
+        cw.TruncateCreateTXT(dir+"\\JarCounter.txt");
+        cw.TruncateCreateTXT(dir+"\\StopJar.txt");
+        while(true)
+        {
+            String RunME = WriteCMDFile(dir+"\\JavaJarTest.jar", String.valueOf(i),WhereIWantIT);
+            //System.out.println(RunME);
+            Process runtime = Runtime.getRuntime().exec("cmd.exe /c start call "+RunME);
+            //System.out.println(runtime);
+            TimeUnit.MILLISECONDS.sleep(100);
+            boolean temp = testthread(dir,i);
+            if(temp == false)
+            {
+                TimeUnit.MILLISECONDS.sleep(100);
+            }
+            else{
+                boolean saved = false;
+                for (int j = 0; j < 3; j++)
+                {
+                    TimeUnit.SECONDS.sleep(1);
+                    temp = testthread(dir,i);
+                    if(temp == false)
+                    {
+                        saved = true;
+                        break;
+                    }
+                }
+                if(saved ==false)
+                {
+                    break;
+                }
+
+            }
+            i = i +1;
+        }
+        cw.WriteToDataTXT(dir+"\\StopJar.txt","Stop");
+        System.out.println("Maximum amount of jars:"+i);
+    }
+    public static boolean testthread(String dir,int i)
+    {
+        CreateWordsTXT cw = new CreateWordsTXT();
+        String JarCounter = cw.TXTtoString(dir+"\\JarCounter.txt");
+        System.out.println(JarCounter);
+        if(!JarCounter.contains("ThreadNum:"+i))
+        {
+            return true;
+        }
+        return false;
+    }
+    public static String WriteCMDFile(String JarPath,String ThreadID,String FolderWhereYouWantIT)
+    {
+        String filename = FolderWhereYouWantIT+ThreadID+".bat";
+        System.out.println(filename);
+        try {
+
+            File myObj = new File(filename);
+            if (myObj.createNewFile()) {
+                System.out.println("File created: " + myObj.getName());
+            } else {
+                System.out.println("File already exists.");
+            }
+            FileWriter myWriter = new FileWriter(filename);
+            myWriter.write("java -jar "+JarPath+" "+ThreadID+"\nexit");//
+            myWriter.close();
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+        return filename;
+    }
+    public static void HeavyJavaBenchMain(String dir) throws IOException {
+
         int RunCount = 10000;
 
         /*
@@ -21,13 +124,15 @@ public class Main
         System.out.println("Starting testing...");
 
          */
-        String JavaSingleThreadBenchPath = "";
         Scanner sc= new Scanner(System.in);
+        /*
         while(JavaSingleThreadBenchPath == "")
         {
             System.out.println("Give the full path to the JavaSingleThreadBench.jar file, be careful as an incorrect path will fail the multithreaded bench. Path: ");
             JavaSingleThreadBenchPath = sc.nextLine();
         }
+
+         */
         CreateWordsTXT CW = new CreateWordsTXT();
         String Text = CW.TXTtoString();
         ArrayList Words = CW.CSVtoArrayList();
@@ -78,11 +183,21 @@ public class Main
         System.out.println("Starting multi-threaded test. Number of threads detected: "+threads);
         String ThreadCount = "Number of threads detected: "+threads;
         CW.WriteToDataTXT("\n"+ThreadCount+"\n");
+        String WhereIWantIT = CreateDirectory(dir,"\\StressTestBats");
         for (int i = 0; i <cores; i++)
         {
-            Process runtime = Runtime.getRuntime().exec("java -jar "+JavaSingleThreadBenchPath);
+            String RunME = WriteCMDFile(dir+"\\JavaSingleThreadBench.jar", String.valueOf(i),WhereIWantIT);
+            Process runtime = Runtime.getRuntime().exec("cmd.exe /c start call "+RunME);
         }
         System.out.println("All testing complete scores should be available in the TestDataFile.txt (found under your main user folder)");
+    }
+    public static String CreateDirectory(String path,String name)
+    {
+        File theDir = new File(path+name);
+        if (!theDir.exists()){
+            theDir.mkdirs();
+        }
+        return path+name;
     }
     public static long RunTest(String Text, ArrayList<String> Words, int RunCount)
     {
@@ -112,6 +227,7 @@ public class Main
         System.out.println("Average duration of each run in nanoseconds: "+AvgDuration);
         System.out.println("Combined duration of the runs in milliseconds: "+ TotalDuration);
         return TotalDuration;
+
     }
 
 }

@@ -1,4 +1,5 @@
 import java.io.*;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -51,7 +52,42 @@ public class CreateWordsTXT
         }
         return Out;
     }
+    public static void WriteToDataTXT(String file,String Data)
+    {
+        try {
+            FileWriter myWriter = new FileWriter(file,true);
+            myWriter.write(Data);
+            myWriter.close();
+            System.out.println("Successfully wrote to the file.");
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
     public String TXTtoString(String File)
+    {
+        String Out ="";
+        try(BufferedReader br = new BufferedReader(new FileReader(File)))
+        {
+            StringBuilder sb = new StringBuilder();
+            String line = br.readLine();
+
+            while (line != null) {
+                sb.append(line);
+                sb.append(System.lineSeparator());
+                line = br.readLine();
+            }
+            String everything = sb.toString();
+            Out = everything;
+            //System.out.println(Out);
+        }
+        catch (IOException e)
+        {
+            System.out.println(e);
+        }
+        return Out;
+    }
+    public String TXTtoString(String Path, String File)
     {
         String Out ="";
         try(BufferedReader br = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream(File))))
@@ -66,7 +102,7 @@ public class CreateWordsTXT
             }
             String everything = sb.toString();
             Out = everything;
-            System.out.println(Out);
+            //System.out.println(Out);
         }
         catch (IOException e)
         {
@@ -107,6 +143,39 @@ public class CreateWordsTXT
         ArrayList<String> al = new ArrayList<String>(Arrays.asList(x));
         System.out.println(al);
         return al;
+    }
+    public static void CreateTXT(String File) throws IOException
+    {
+        try {
+
+            File myObj = new File(File);
+            if (myObj.createNewFile()) {
+                System.out.println("File created: " + myObj.getName());
+            } else {
+                System.out.println("File already exists.");
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
+    public static void TruncateCreateTXT(String File) throws IOException
+    {
+        try {
+
+            File myObj = new File(File);
+            if (myObj.createNewFile()) {
+                System.out.println("File created: " + myObj.getName());
+            } else {
+                System.out.println("File already exists.");
+            }
+            FileWriter myWriter = new FileWriter(File);
+            myWriter.write("");//
+            myWriter.close();
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
     }
     public static void CreateATXTFile()
     {
