@@ -53,9 +53,9 @@ public class Main
             }
             else{
                 boolean saved = false;
-                for (int j = 0; j < 3; j++)
+                for (int j = 0; j < 9; j++)
                 {
-                    TimeUnit.SECONDS.sleep(1);
+                    TimeUnit.MILLISECONDS.sleep(300);
                     temp = testthread(dir,i);
                     if(temp == false)
                     {
@@ -98,7 +98,7 @@ public class Main
                 System.out.println("File already exists.");
             }
             FileWriter myWriter = new FileWriter(filename);
-            myWriter.write("java -jar "+JarPath+" "+ThreadID+"\nexit");//
+            myWriter.write("java -jar -Xms64M "+JarPath+" "+ThreadID+"\nexit");//
             myWriter.close();
         } catch (IOException e) {
             System.out.println("An error occurred.");
