@@ -9,10 +9,12 @@ import java.util.concurrent.TimeUnit;
 
 public class Main
 {
+    public static String os = System.getProperty("os.name");
     public static void main(String[] args) throws IOException, URISyntaxException, InterruptedException {
         CodeSource codeSource = Main.class.getProtectionDomain().getCodeSource();
         File jarFile = new File(codeSource.getLocation().toURI().getPath());
         String jarDir = jarFile.getParentFile().getPath();
+
         System.out.println("Pick java benchmark, write the corresponding number for the benchmark:");
         int WhichTest = -1;
         Scanner sc = new Scanner(System.in);
@@ -43,7 +45,7 @@ public class Main
         {
             String RunME = WriteCMDFile(dir+"\\JavaJarTest.jar", String.valueOf(i),WhereIWantIT);
             //System.out.println(RunME);
-            if(i%10==0)
+            if(i%10==0 && os.contains("Windows"))
             {
                 Process runtime = Runtime.getRuntime().exec("cmd.exe /c start call " + RunME);
             }
