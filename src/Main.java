@@ -43,7 +43,14 @@ public class Main
         {
             String RunME = WriteCMDFile(dir+"\\JavaJarTest.jar", String.valueOf(i),WhereIWantIT);
             //System.out.println(RunME);
-            Process runtime = Runtime.getRuntime().exec("cmd.exe /c start call "+RunME);
+            if(i%10==0)
+            {
+                Process runtime = Runtime.getRuntime().exec("cmd.exe /c start call " + RunME);
+            }
+            else
+            {
+                Process runtime = Runtime.getRuntime().exec(RunME);
+            }
             //System.out.println(runtime);
             TimeUnit.MILLISECONDS.sleep(100);
             boolean temp = testthread(dir,i);
@@ -98,7 +105,7 @@ public class Main
                 System.out.println("File already exists.");
             }
             FileWriter myWriter = new FileWriter(filename);
-            myWriter.write("java -jar -Xms64M "+JarPath+" "+ThreadID+"\nexit");//
+            myWriter.write("java -jar -Xms64M -Xmx128M "+JarPath+" "+ThreadID+"\nexit");//
             myWriter.close();
         } catch (IOException e) {
             System.out.println("An error occurred.");
