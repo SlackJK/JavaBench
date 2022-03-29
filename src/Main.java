@@ -39,11 +39,29 @@ public class Main
         String WhereIWantIT = CreateDirectory(dir,"\\JarTestBats\\");;
         System.out.println(WhereIWantIT);
         CreateWordsTXT cw = new CreateWordsTXT();
-        cw.TruncateCreateTXT(dir+"\\JarCounter.txt");
-        cw.TruncateCreateTXT(dir+"\\StopJar.txt");
+        String fucklinux1 = dir + "\\JarCounter.txt";
+        String fucklinux2 = dir + "\\StopJar.txt";
+        if(os.contains("Windows"))
+        {
+            cw.TruncateCreateTXT(dir + "\\JarCounter.txt");
+            cw.TruncateCreateTXT(dir + "\\StopJar.txt");
+        }
+        else
+        {
+            cw.TruncateCreateTXT(fucklinux1.replace("\\","/"));
+            cw.TruncateCreateTXT(fucklinux2.replace("\\","/"));
+        }
         while(true)
         {
-            String RunME = WriteCMDFile(dir+"\\JavaJarTest.jar", String.valueOf(i),WhereIWantIT);
+            String RunME = "";
+            if(os.contains("Windows"))
+            {
+                 RunME = WriteCMDFile(dir + "\\JavaJarTest.jar", String.valueOf(i), WhereIWantIT);
+            }
+            else{
+                String fucklinux3 = dir+"\\JavaJarTest.jar";
+                 RunME = WriteCMDFile(fucklinux3.replace("\\","/"), String.valueOf(i),WhereIWantIT.replace("\\","/"));
+            }
             //System.out.println(RunME);
             if(i%10==0 && os.contains("Windows"))
             {
@@ -51,6 +69,7 @@ public class Main
             }
             else
             {
+                RunME = RunME.replace("\\","/");
                 Process runtime = Runtime.getRuntime().exec(RunME);
             }
             //System.out.println(runtime);
@@ -80,13 +99,27 @@ public class Main
             }
             i = i +1;
         }
-        cw.WriteToDataTXT(dir+"\\StopJar.txt","Stop");
+        if(os.contains("Windows"))
+        {
+            cw.WriteToDataTXT(dir+"\\StopJar.txt","Stop");
+        }
+        else
+        {
+            cw.WriteToDataTXT(fucklinux2.replace("\\","/"),"Stop");
+        }
         System.out.println("Maximum amount of jars:"+i);
     }
     public static boolean testthread(String dir,int i)
     {
         CreateWordsTXT cw = new CreateWordsTXT();
-        String JarCounter = cw.TXTtoString(dir+"\\JarCounter.txt");
+        String JarCounter = "";
+        if(os.contains("Windows")) {
+            JarCounter = cw.TXTtoString(dir + "\\JarCounter.txt");
+        }
+        else {
+            String fucklinuxdammit =dir + "\\JarCounter.txt";
+            JarCounter = cw.TXTtoString(fucklinuxdammit.replace("\\","/"));
+        }
         System.out.println(JarCounter);
         if(!JarCounter.contains("ThreadNum:"+i))
         {
