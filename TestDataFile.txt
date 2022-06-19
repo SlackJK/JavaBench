@@ -1,0 +1,60 @@
+
+-------------New Run-----------------
+Average duration per test run in milliseconds: 1333.0
+Single Threaded testing took 9 seconds.
+
+Number of threads detected: 16
+
+-------------New Run-----------------
+Average duration per test run in milliseconds: 1032.0
+Single Threaded testing took 6 seconds.
+
+Number of threads detected: 16
+
+-------------New Run-----------------
+Average duration per test run in milliseconds: 1048.0
+Single Threaded testing took 4 seconds.
+
+Number of threads detected: 16
+
+-------------New Run-----------------
+Average duration per test run in milliseconds: 1100.0
+Single Threaded testing took 8 seconds.
+
+Number of threads detected: 16
+
+-------------New Run-----------------
+Average duration per test run in milliseconds: 1044.0
+Single Threaded testing took 7 seconds.
+
+Number of threads detected: 16
+
+-------------New Run-----------------
+Average duration per test run in milliseconds: 1038.0
+Single Threaded testing took 3 seconds.
+
+Number of threads detected: 16
+
+Average during multi-thread test per test run in milliseconds: 4687.0
+This threads testing in milliseconds took: 141024
+
+Average during multi-thread test per test run in milliseconds: 4691.0
+This threads testing in milliseconds took: 141141
+
+Average during multi-thread test per test run in milliseconds: 4698.0
+This threads testing in milliseconds took: 141320
+
+Average during multi-thread test per test run in milliseconds: 4696.0
+This threads testing in milliseconds took: 141303
+
+Average during multi-thread test per test run in milliseconds: 4696.0
+This threads testing in milliseconds took: 141324
+
+Average during multi-thread test per test run in milliseconds: 4698.0
+This threads testing in milliseconds took: 141362
+
+Average during multi-thread test per test run in milliseconds: 4700.0
+This threads testing in milliseconds took: 141424
+
+Average during multi-thread test per test run in milliseconds: 4695.0
+This threads testing in milliseconds took: 141260

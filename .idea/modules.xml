@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/JavaBench.iml" filepath="$PROJECT_DIR$/JavaBench.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JavaJarTest/JavaJarTest.iml" filepath="$PROJECT_DIR$/JavaJarTest/JavaJarTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JavaSingleThreadBench/JavaSingleThreadBench.iml" filepath="$PROJECT_DIR$/JavaSingleThreadBench/JavaSingleThreadBench.iml" />
+    </modules>
+  </component>
+</project>
