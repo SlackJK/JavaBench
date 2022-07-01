@@ -25,7 +25,14 @@ public class DoMath
     }
     public static boolean Test()
     {
-        String data = TXTtoString(Main2.jarDir+"\\StopJar.txt");
+        String data;
+        if(Main2.os.contains("Windows"))
+        {
+            data = TXTtoString(Main2.jarDir+"\\StopJar.txt");
+        }
+        else{
+            data = TXTtoString(Main2.jarDir+"/StopJar.txt");
+        }
         if(data.contains("Stop"))
         {
             return true;

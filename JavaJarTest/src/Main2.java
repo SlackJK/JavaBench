@@ -7,12 +7,18 @@ import java.security.CodeSource;
 public class Main2
 {
     public static String jarDir ="";
+    public static String os = System.getProperty("os.name");
     public static void main(String[] args) throws InterruptedException, URISyntaxException
     {
         CodeSource codeSource = Main2.class.getProtectionDomain().getCodeSource();
         File jarFile = new File(codeSource.getLocation().toURI().getPath());
         jarDir = jarFile.getParentFile().getPath();
+        if(os.contains("Windows")){
         WriteToDataTXT(jarDir+"\\JarCounter.txt","ThreadNum:"+args[0]);
+        }
+        else{
+            WriteToDataTXT(jarDir+"/JarCounter.txt","ThreadNum:" +args[0]);
+        }
         DoMath.MathMe();
     }
     public static void WriteToDataTXT(String file,String Data)

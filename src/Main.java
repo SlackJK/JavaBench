@@ -10,10 +10,15 @@ import java.util.concurrent.TimeUnit;
 public class Main
 {
     public static String os = System.getProperty("os.name");
-    public static void main(String[] args) throws IOException, URISyntaxException, InterruptedException {
+    public static void main(String[] args) throws IOException, URISyntaxException, InterruptedException
+    {
         CodeSource codeSource = Main.class.getProtectionDomain().getCodeSource();
         File jarFile = new File(codeSource.getLocation().toURI().getPath());
         String jarDir = jarFile.getParentFile().getPath();
+        String x = jarFile.getCanonicalPath();
+
+        System.out.println(jarDir);
+        System.out.println(x);
 
         System.out.println("Pick java benchmark, write the corresponding number for the benchmark:");
         int WhichTest = -1;
@@ -36,7 +41,14 @@ public class Main
     {
         int i = 0;
         boolean test = false;
-        String WhereIWantIT = CreateDirectory(dir,"\\JarTestBats\\");;
+        String WhereIWantIT;
+        if (os.contains("Windows")){
+            WhereIWantIT = CreateDirectory(dir, "\\JarTestBats\\");
+        }
+        else{
+            WhereIWantIT = CreateDirectory(dir,"/JarTestBats/");
+        }
+
         System.out.println(WhereIWantIT);
         CreateWordsTXT cw = new CreateWordsTXT();
         String fucklinux1 = dir + "\\JarCounter.txt";
@@ -67,7 +79,11 @@ public class Main
             {
                 Process runtime = Runtime.getRuntime().exec("cmd.exe /c start call " + RunME);
             }
-            else
+            else if (os.contains("Windows"))
+            {
+                Process runtime = Runtime.getRuntime().exec(RunME);
+            }
+            if(!os.contains("Windows"))
             {
                 RunME = RunME.replace("\\","/");
                 Process runtime = Runtime.getRuntime().exec(RunME);
@@ -129,7 +145,13 @@ public class Main
     }
     public static String WriteCMDFile(String JarPath,String ThreadID,String FolderWhereYouWantIT)
     {
-        String filename = FolderWhereYouWantIT+ThreadID+".bat";
+        String filename;
+        if(os.contains("Windows")){
+            filename = FolderWhereYouWantIT+ThreadID+".bat";
+        }
+        else {
+            filename = FolderWhereYouWantIT+ThreadID+".sh";
+        }
         System.out.println(filename);
         try {
 
